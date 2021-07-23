@@ -1,1 +1,1 @@
-export * from './mocked-axios'
+export * from './mocked-axios';
