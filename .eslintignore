@@ -6,3 +6,4 @@ public
 jest.config.js
 webpack.config.js
 *.d.ts
+yarn-error.log
