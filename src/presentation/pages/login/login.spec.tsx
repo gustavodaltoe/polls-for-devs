@@ -7,7 +7,13 @@ describe('Login Component', () => {
     const errorWrap = getByTestId('error-wrap');
     expect(errorWrap.childElementCount).toBe(0);
 
-    const button = getByRole('button') as HTMLButtonElement;
-    expect(button.disabled).toBe(true);
+    const button = getByRole('button');
+    expect(button).toHaveProperty('disabled');
+
+    const emailStatus = getByTestId('email-status');
+    expect(emailStatus.title).toBe('Campo obrigatório');
+
+    const passwordStatus = getByTestId('password-status');
+    expect(passwordStatus.title).toBe('Campo obrigatório');
   });
 });
