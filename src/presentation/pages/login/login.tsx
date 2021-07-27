@@ -15,7 +15,7 @@ export const Login = ({ validation }: Props) => {
     email: '',
     password: '',
     emailError: '',
-    passwordError: 'Campo obrigatório',
+    passwordError: '',
     mainError: '',
   });
 
@@ -23,12 +23,9 @@ export const Login = ({ validation }: Props) => {
     setState((state) => ({
       ...state,
       emailError: validation.validate('email', state.email),
+      passwordError: validation.validate('password', state.password),
     }));
-  }, [validation, state.email]);
-
-  useEffect(() => {
-    validation.validate('password', state.password);
-  }, [validation, state.password]);
+  }, [validation, state.email, state.password]);
 
   return (
     <div className={Styles.login}>
