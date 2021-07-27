@@ -13,6 +13,7 @@ export const Login = ({ validation }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
     email: '',
+    password: '',
     emailError: 'Campo obrigatório',
     passwordError: 'Campo obrigatório',
     mainError: '',
@@ -20,7 +21,11 @@ export const Login = ({ validation }: Props) => {
 
   useEffect(() => {
     validation.validate({ email: state.email });
-  }, [state.email]);
+  }, [validation, state.email]);
+
+  useEffect(() => {
+    validation.validate({ password: state.password });
+  }, [validation, state.password]);
 
   return (
     <div className={Styles.login}>
