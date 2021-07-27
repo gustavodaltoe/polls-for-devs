@@ -29,7 +29,7 @@ export const Login = () => {
             placeholder="Digite sua senha"
           />
 
-          <button className={Styles.submit} type="submit">
+          <button className={Styles.submit} disabled type="submit">
             Entrar
           </button>
           <span className={Styles.link}>Criar conta</span>
