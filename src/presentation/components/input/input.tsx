@@ -19,10 +19,11 @@ export const Input = (props: Props) => {
   };
 
   const getStatus = () => {
-    return '🔴';
+    return error ? '🔴' : '🟢';
   };
+
   const getTitle = () => {
-    return error;
+    return error || 'Tudo certo!';
   };
 
   return (
