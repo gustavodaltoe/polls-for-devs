@@ -45,7 +45,11 @@ export const Login = ({ validation }: Props) => {
             placeholder="Digite sua senha"
           />
 
-          <button className={Styles.submit} disabled type="submit">
+          <button
+            className={Styles.submit}
+            disabled={!!state.emailError || !!state.passwordError}
+            type="submit"
+          >
             Entrar
           </button>
           <span className={Styles.link}>Criar conta</span>
