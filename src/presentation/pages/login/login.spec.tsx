@@ -20,8 +20,8 @@ describe('Login Component', () => {
     const errorWrap = sut.getByTestId('error-wrap');
     expect(errorWrap.childElementCount).toBe(0);
 
-    const button = sut.getByRole('button');
-    expect(button).toHaveProperty('disabled');
+    const button = sut.getByRole('button') as HTMLButtonElement;
+    expect(button.disabled).toBe(true);
 
     const emailStatus = sut.getByTestId('email-status');
     expect(emailStatus.title).toBe(validationStub.errorMessage);
@@ -80,5 +80,22 @@ describe('Login Component', () => {
     const passwordStatus = sut.getByTestId('password-status');
     expect(passwordStatus.title).toBe('Tudo certo!');
     expect(passwordStatus.textContent).toBe('🟢');
+  });
+
+  test('Should enable submit button if form is valid', () => {
+    const { sut, validationStub } = makeSut();
+    validationStub.errorMessage = null;
+
+    const emailInput = sut.getByTestId('email');
+    fireEvent.input(emailInput, {
+      target: { value: faker.internet.email() },
+    });
+    const passwordInput = sut.getByTestId('password');
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() },
+    });
+
+    const button = sut.getByRole('button') as HTMLButtonElement;
+    expect(button.disabled).toBe(false);
   });
 });
