@@ -2,6 +2,19 @@ import { ValidationStub } from '@/presentation/test';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import { Login } from './login';
 import faker from 'faker';
+import { Authentication, AuthenticationParams } from '@/domain/usecases';
+import { mockAccountModel } from '@/domain/test';
+import { AccountModel } from '@/domain/models';
+
+class AuthenticationSpy implements Authentication {
+  account = mockAccountModel();
+  params: AuthenticationParams;
+
+  async auth(params: AuthenticationParams): Promise<AccountModel> {
+    this.params = params;
+    return Promise.resolve(this.account);
+  }
+}
 
 type SutParams = {
   validationError?: string;
@@ -9,10 +22,15 @@ type SutParams = {
 
 const makeSut = (params?: SutParams) => {
   const validationStub = new ValidationStub();
-  validationStub.errorMessage = params?.validationError;
-  const sut = render(<Login validation={validationStub} />);
+  const authenticationSpy = new AuthenticationSpy();
 
-  return { sut };
+  validationStub.errorMessage = params?.validationError;
+
+  const sut = render(
+    <Login validation={validationStub} authentication={authenticationSpy} />,
+  );
+
+  return { sut, authenticationSpy };
 };
 
 describe('Login Component', () => {
@@ -119,5 +137,28 @@ describe('Login Component', () => {
 
     const spinner = sut.getByTestId('spinner');
     expect(spinner).toBeTruthy();
+  });
+
+  test('Should call Authentication with correct values', () => {
+    const { sut, authenticationSpy } = makeSut();
+
+    const emailInput = sut.getByTestId('email');
+    const email = faker.internet.email();
+    fireEvent.input(emailInput, {
+      target: { value: email },
+    });
+    const passwordInput = sut.getByTestId('password');
+    const password = faker.internet.password();
+    fireEvent.input(passwordInput, {
+      target: { value: password },
+    });
+
+    const button = sut.getByRole('button') as HTMLButtonElement;
+    fireEvent.click(button);
+
+    expect(authenticationSpy.params).toEqual({
+      email,
+      password,
+    });
   });
 });
