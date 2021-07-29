@@ -9,7 +9,7 @@ describe('RequiredFieldValidation', () => {
     expect(error).toEqual(new RequiredFieldError());
   });
 
-  test('Should return falsy if  field is not empty', () => {
+  test('Should return falsy if field is not empty', () => {
     const sut = new RequiredFieldValidation('email');
     const error = sut.validate(faker.random.word());
     expect(error).toBeFalsy();
