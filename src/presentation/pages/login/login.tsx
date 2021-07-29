@@ -9,6 +9,7 @@ import Context from '@/presentation/contexts/form/form-context';
 import { useEffect, useState } from 'react';
 import { Validation } from '@/presentation/protocols/validation';
 import { Authentication } from '@/domain/usecases';
+import { Link } from 'react-router-dom';
 
 type Props = {
   validation: Validation;
@@ -79,7 +80,9 @@ export const Login = ({ validation, authentication }: Props) => {
           >
             Entrar
           </button>
-          <span className={Styles.link}>Criar conta</span>
+          <Link data-testid="signup" to="/signup" className={Styles.link}>
+            Criar conta
+          </Link>
 
           <FormStatus />
         </form>
