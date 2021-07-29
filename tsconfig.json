@@ -10,7 +10,6 @@
     "module": "esnext",
     "moduleResolution": "node",
     "jsx": "react-jsx",
-    "rootDir": "src",
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"]
@@ -21,6 +20,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
+    "jest-setup.ts"
   ],
   "exclude": [
     "node_modules"
