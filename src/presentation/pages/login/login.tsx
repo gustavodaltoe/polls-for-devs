@@ -35,7 +35,9 @@ export const Login = ({ validation, authentication }: Props) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (state.isLoading) return;
+    if (state.isLoading || state.emailError || state.passwordError) {
+      return;
+    }
     setState((state) => ({ ...state, isLoading: true }));
     await authentication.auth({ email: state.email, password: state.password });
   };
@@ -45,7 +47,11 @@ export const Login = ({ validation, authentication }: Props) => {
       <LoginHeader />
 
       <Context.Provider value={{ state, setState }}>
-        <form className={Styles.form} onSubmit={handleSubmit}>
+        <form
+          data-testid="form"
+          className={Styles.form}
+          onSubmit={handleSubmit}
+        >
           <h2>Login</h2>
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
           <Input
